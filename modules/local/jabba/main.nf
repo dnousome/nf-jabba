@@ -3,8 +3,8 @@ process JABBA {
     label 'process_high'
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'docker://mskilab/jabba:latest':
-        'mskilab/jabba:latest' }"
+        'docker://dnousome/jabba:v0.0.1':
+        'dnousome/jabba:v0.0.1' }"
 
     input:
     tuple val(meta), path(cov_rds)

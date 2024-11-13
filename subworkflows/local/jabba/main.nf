@@ -98,15 +98,18 @@ workflow COV_JUNC_JABBA {
     input_coerced_vcf = input_jab.map{ meta, cov, hets, vcf, vcf2 -> [ meta, vcf ] }     //chr stripped somatic sv
     input_coerced_vcf2 = input_jab.map{ meta, cov, hets, vcf, vcf2 -> [ meta, vcf2 ] }   //chr stripped unfiltered somatic sv
 
+    input_seg=input_jab.join(cbs_seg_rds_jabba).map{meta,cov,hets,vcf,vcf2,seg -> [meta, seg]}
+    input_nseg=input_jab.join(cbs_nseg_rds_jabba).map{meta,cov,hets,vcf,vcf2,nseg -> [meta, nseg]}
+
     JABBA(input_coerced_cov, input_coerced_vcf, ploidy_jabba, input_coerced_hets,
-    cbs_seg_rds_jabba, cbs_nseg_rds_jabba, input_coerced_vcf2, blacklist_junctions_jabba,
+    input_seg, input_nseg, input_coerced_vcf2, blacklist_junctions_jabba,
     geno_jabba, indel_jabba, tfield_jabba,
     iter_jabba, rescue_window_jabba, rescue_all_jabba, nudgebalanced_jabba,
     edgenudge_jabba, strict_jabba, allin_jabba, field_jabba, maxna_jabba,
     blacklist_coverage_jabba, purity_jabba, pp_method_jabba, cnsignif_jabba,
     slack_jabba, linear_jabba, tilim_jabba, epgap_jabba, fix_thres_jabba, lp_jabba,
     ism_jabba, filter_loose_jabba, gurobi_jabba, verbose_jabba)
-
+    
     jabba_rds           = JABBA.out.jabba_rds
     jabba_gg            = JABBA.out.jabba_gg
     jabba_vcf           = JABBA.out.jabba_vcf
@@ -116,7 +119,7 @@ workflow COV_JUNC_JABBA {
     karyograph          = JABBA.out.karyograph
 
     versions          = JABBA.out.versions
-
+    
     emit:
     jabba_rds
     jabba_gg
@@ -127,4 +130,5 @@ workflow COV_JUNC_JABBA {
     karyograph
 
     versions
+    
 }

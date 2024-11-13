@@ -1405,7 +1405,7 @@ workflow NFJABBA {
             }
 
             if (params.step == 'jabba') {
-
+                println ("JABBA with other SV Calling")
                 input_cov_jabba = input_jabba
                                     .map{ meta, cov, hets, vcf, vcf2, seg, nseg -> [ meta, cov ] }
 

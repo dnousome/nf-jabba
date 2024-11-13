@@ -1,6 +1,5 @@
 process JABBA {
     tag "$meta.id"
-    label 'process_high'
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'docker://dnousome/jabba:v0.0.1':
